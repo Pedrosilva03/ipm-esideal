@@ -1,0 +1,22 @@
+@import url('https://fonts.cdnfonts.com/css/kodchasan');
+
+html, body {
+    margin: 0 auto;
+    font-family: 'Kodchasan'
+}
+
+h1 {
+    font-size: 5rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+}
+
+input {
+    all: unset;
+}
+
+a {
+    all: unset;
+}
