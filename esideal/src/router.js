@@ -23,8 +23,9 @@ const links = [
 
     {
         path: "/servicos/:id",  
-        name: "Servico",
+        name: "Pag_Servico",
         component: Pag_Servico,
+        props: true
     }
 ]
 

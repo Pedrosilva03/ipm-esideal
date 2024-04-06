@@ -11,5 +11,6 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 ```bash
 cd esideal
 npm install 
+npm install --save-dev concurrently
 npm run dev
 ```

@@ -1,14 +1,16 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
 const servicos = ref([]);
-const service_defenitions = ref([]);
+const service_definitions = ref([]);
+const router = useRouter();
 
-// serviços que não foram realizados ordenados por data limite
+// serviços que não foram realizados ou cancelados ordenados por data limite
 axios.get('http://localhost:3000/services')
     .then(response => {
-        let filteredServicos = response.data.filter(servico => servico.estado !== 'realizado');
+        let filteredServicos = response.data.filter(servico => servico.estado !== 'realizado' && servico.estado !== 'cancelado');
 
         filteredServicos.sort((a, b) => {
             if (!a.data || !b.data) {
@@ -26,13 +28,40 @@ axios.get('http://localhost:3000/services')
         console.error('Error fetching services data:', error);
     });
 
-    axios.get('http://localhost:3000/service-defenitions')
+// definições de serviços
+axios.get('http://localhost:3000/service-definitions')
     .then(response => {
-        service_defenitions.value = response.data;
+        service_definitions.value = response.data;
     })
     .catch(error => {
-        console.error('Error fetching defenitions data:', error);
+        console.error('Error fetching definitions data:', error);
     });
+
+const format_date = (date) => {
+    if (date) {
+        const { dia, mes, ano, hora, minutos } = date;
+        if (dia !== undefined && mes !== undefined && ano !== undefined && hora !== undefined && minutos !== undefined) {
+            return `${dia}/${mes}/${ano} ${hora}:${minutos}`;
+        }
+    }
+    return '-';
+};
+
+const format_service_definition = (def_id) => {
+    const def = service_definitions.value.find(def => def.id === def_id);
+    if (def) return def.descr;
+    else return '-';
+};
+
+const format_service_state = (state) => {
+    if (state === 'nafila') return 'Na fila';
+    if (state === 'programado') return 'Programado';
+    if (state === 'parado') return 'Parado';
+};
+
+const service_details = (id) => {
+    router.push({ name: 'Pag_Servico', params: { id } });
+};
 </script>
 
 <template>
@@ -51,10 +80,10 @@ axios.get('http://localhost:3000/services')
             </thead>
 
             <tbody>
-                <tr class="servicos-table-row" v-for="servico in servicos" :key="servico.id">
+                <tr class="servicos-table-row" v-for="servico in servicos" :key="servico.id" @click="service_details(servico.id)">
                     <td>{{ servico.id }}</td>
                     <td>{{ servico.vehicleId }}</td>
-                    <td>{{ servico['service-definitionId'] }}</td>
+                    <td>{{ format_service_definition(servico['service-definitionId']) }}</td>
                     <td>{{ format_date(servico.data) }}</td>
                     <td>{{ format_service_state(servico.estado) }}</td>
                 </tr>
@@ -65,29 +94,7 @@ axios.get('http://localhost:3000/services')
 
 <script>
 export default {
-    name: 'Servicos',
-
-    methods: {
-        format_date(date) {
-            if (date) {
-                const { dia, mes, ano, hora, minutos } = date;
-                if (dia !== undefined && mes !== undefined && ano !== undefined && hora !== undefined && minutos !== undefined) {
-                    return `${dia}/${mes}/${ano} ${hora}:${minutos}`;
-                }
-            }
-            return '-';
-        },
-
-        format_service_state(state) {
-            if (state === 'nafila') return 'Na fila';
-            if (state === 'programado') return 'Programado';
-            if (state === 'parado') return 'Parado';
-        },
-
-        service_details(id) {
-            this.router.push({ name: 'Pag_Servico', params: { id } });
-        }
-    }
+    name: 'Servicos'
 };
 </script>
 

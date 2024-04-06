@@ -2,6 +2,7 @@
   import { computed } from 'vue';
   import { useRoute } from 'vue-router';
   import Navbar from './components/navbar.vue'
+  import Footer from './components/footer.vue'
   const route = useRoute();
 
   const shouldShowNavbar = computed(() => {
@@ -12,29 +13,12 @@
 <template>
   <Navbar v-if="shouldShowNavbar" />
   <RouterView />
+  <Footer v-if="shouldShowNavbar" />
 </template>
 
 <script>
   export default {
-    name: 'App',
-
-    data() {
-      return {
-        login: false
-      }
-    },
-
-    methods: {
-      login() {
-        this.login = true;
-        console.log(this.login);
-      },
-
-      logout() {
-        this.login = false;
-        console.log(login);
-      }
-    }
+    name: 'App'
 
   }
 </script>
