@@ -7,11 +7,14 @@ const route = useRoute()
 const id = route.params.id;
 
 const editing = ref(false);
+const confirm_finish = ref(true);
 
 const servico = ref(null);
 const def_servico = ref(null);
 const veiculo = ref(null);
 const cliente = ref(null);
+const vehicle_type = ref(null);
+const service_definitions = ref([]);
 
 const service_states = ref(['porRealizar', 'nafila', 'programado', 'parado', 'realizado', 'cancelado']);
 
@@ -38,6 +41,14 @@ axios.get(`http://localhost:3000/services/${id}`)
                             .catch(clientError => {
                                 console.error('Error fetching client data:', clientError);
                             });
+
+                        axios.get(`http://localhost:3000/vehicle-types/${veiculo.value['vehicle-typeId']}`)
+                            .then(response => {
+                              vehicle_type.value = response.data;
+                            })
+                            .catch(error => {
+                              console.error('Error fetching vehicle services:', error);
+                            });
                     })
                     .catch(vehicleError => {
                         console.error('Error fetching vehicle data:', vehicleError);
@@ -49,6 +60,15 @@ axios.get(`http://localhost:3000/services/${id}`)
     })
     .catch(serviceError => {
         console.error('Error fetching service data:', serviceError);
+    });
+
+// definições de serviços
+axios.get('http://localhost:3000/service-definitions')
+    .then(response => {
+        service_definitions.value = response.data;
+    })
+    .catch(error => {
+        console.error('Error fetching definitions data:', error);
     });
 
 const format_date = (date) => {
@@ -135,13 +155,19 @@ const confirm_service_info_edit = () => {
 
     // refresh
     window.location.reload();
-}
+};
+
+const format_service_definition = (def_id) => {
+    const def = service_definitions.value.find(def => def.id === def_id);
+    if (def) return def.descr;
+    else return '-';
+};
 </script>
 
 <template>
     <h2 class="servico-title">Serviço {{ servico.id }}</h2>
 
-    <div class="servico-container">
+    <div class="servico-container" v-if="!confirm_finish">
       <div class="vehicle-info-container">
         <div class="vehicle-info-title">
           <img src="/imgs/sports-car.png" class="vehicle-icon">
@@ -201,6 +227,26 @@ const confirm_service_info_edit = () => {
             <h3>Confirmar</h3>
             <img class="edit-check-icon" src="/imgs/check.png">
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="confirm-service-end-container" v-if="confirm_finish">
+      <div class="confirm-service-title-container">  
+        <h2 class="confirm-service-title">Serviço terminado</h2>
+        <h3>Recomendar algum serviço ao cliente ?</h3>
+      </div>
+
+      <div class="service-recomendations-container">
+        <div class="service-recomendation" v-for="service in vehicle_type['serviços']" :key="servico">
+          <input type="checkbox" :value="service" :id="service" :name="service">{{ format_service_definition(service) }}
+        </div>
+      </div>
+
+      <div class="service-info-edit-confirm-container" style="margin-top: 5px;">
+        <div class="service-info-edit-confirm-button">
+          <h3>Confirmar</h3>
+          <img class="edit-check-icon" src="/imgs/check.png">
         </div>
       </div>
     </div>
@@ -334,5 +380,39 @@ const confirm_service_info_edit = () => {
 
   .service-info-edit-confirm-button:hover {
     transform: scale(1.05);
+  }
+
+  .confirm-service-end-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    background-color: #D9D9D9; 
+    padding: 10px 15px;
+    border-radius: 20px;
+  }
+
+  .confirm-service-title {
+    margin: 0 auto;
+  }
+
+  .service-recomendations-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5%;
+    width: 80%;
+  }
+
+  .service-recomendation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5%;
+    width: 45%;
   }
 </style>
