@@ -9,7 +9,7 @@
           <img src="/imgs/task.png" class="nav-link" />
       </router-link>
 
-      <router-link to="/login">
+      <router-link to="/login" @click="logout">
           <img src="/imgs/logout.png" class="nav-link" />
       </router-link>
     </div>
@@ -20,10 +20,13 @@
   export default {
     name: 'Navbar',
 
+    props: {
+      loggedInUser: Object
+    },
+
     methods: {
       logout() {
         this.$emit('logout');
-        this.$router.push('/login');
       }
     }
   }

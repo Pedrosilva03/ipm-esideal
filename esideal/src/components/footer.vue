@@ -19,8 +19,6 @@
     color: white;
     padding: 1rem;
     margin-top: 5%;
-    position: fixed;
-    width: 100%;
   }
 
     .footer-text {

@@ -11,14 +11,30 @@
 </script>
 
 <template>
-  <Navbar v-if="shouldShowNavbar" />
-  <RouterView />
+  <Navbar v-if="shouldShowNavbar" @logout="handleLogout" :loggedInUser="loggedInUser" />
+  <RouterView @login="handleLogin" />
   <Footer v-if="shouldShowNavbar" />
 </template>
 
 <script>
   export default {
-    name: 'App'
+    name: 'App',
 
+    setup() {
+      const loggedInUser = ref(null);
+
+      const handleLogin = (loginData) => {
+        loggedInUser.value = loginData;
+      };
+
+      const handleLogout = () => {
+        loggedInUser.value = null;
+      };
+
+      return {
+        handleLogin,
+        handleLogout
+      };
+    }
   }
 </script>
