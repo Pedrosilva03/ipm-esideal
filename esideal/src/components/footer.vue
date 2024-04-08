@@ -14,10 +14,13 @@
   .footer-container {
     display: flex;
     align-items: center;
+    bottom: 0;
     background-color: #FF0000;
     color: white;
     padding: 1rem;
     margin-top: 5%;
+    position: fixed;
+    width: 100%;
   }
 
     .footer-text {
