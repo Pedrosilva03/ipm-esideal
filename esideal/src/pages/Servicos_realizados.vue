@@ -1,7 +1,7 @@
 <template>
-    <h2 class="servicos-title">Serviços Atribuidos</h2>
-
-    <ServiceTable :possibleStates="['recomendado', 'porRealizar', 'nafila', 'programado', 'parado']" />
+    <h2 class="servicos-title">Serviços realizados</h2>
+    
+    <ServiceTable :possibleStates="['realizado']" />
 </template>
 
 <script>

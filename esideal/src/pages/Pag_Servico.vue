@@ -7,7 +7,8 @@ const route = useRoute()
 const id = route.params.id;
 
 const editing = ref(false);
-const confirm_finish = ref(true);
+const confirm_finish = ref(false);
+const cancel_service = ref(false);
 
 const servico = ref(null);
 const def_servico = ref(null);
@@ -16,7 +17,7 @@ const cliente = ref(null);
 const vehicle_type = ref(null);
 const service_definitions = ref([]);
 
-const service_states = ref(['porRealizar', 'nafila', 'programado', 'parado', 'realizado', 'cancelado']);
+const service_states = ref(['recomendado', 'porRealizar', 'nafila', 'programado', 'parado', 'realizado', 'cancelado']);
 
 // variaveis para guardar os valores dos campos editaveis
 const data_edit = ref(null);
@@ -105,26 +106,66 @@ const update_state = (selected_state) => {
       servico.value.agendamento = 'programado';
     }
 
-    if (selected_state == 'naFila' || selected_state == 'porRealizar') {
+    if (selected_state == 'naFila' || selected_state == 'porRealizar' || selected_state == 'parado' || selected_state == 'recomendado') {
       servico.value.agendamento = 'filaDeEspera';
     }
 
-    axios.put(`http://localhost:3000/services/${id}`, servico.value)
+    if (selected_state == 'realizado') {
+      confirm_finish.value = true;
+    }
+
+    if (selected_state == 'cancelado') {
+      cancel_service.value = true;
+    }
+
+    if (selected_state != 'cancelado' && selected_state != 'realizado') {
+      axios.put(`http://localhost:3000/services/${id}`, servico.value)
+          .then(response => {
+              console.log('Service state updated:', response);
+              window.location.reload();
+          })
+          .catch(error => {
+              console.error('Error updating service state:', error);
+          });
+    }
+};
+
+const confirm_service_finish = () => {
+  const recomendations = document.querySelectorAll('.service-recomendation input:checked');
+  recomendations.forEach(recomendation => {
+    const recomendation_id = Number(recomendation.value);
+    print('Recomendation:', recomendation_id);
+    axios.post('http://localhost:3000/services', {
+        'id': 's' + Math.floor(Math.random() * 1000000),
+        'service-definitionId': recomendation_id,
+        'vehicleId': servico.value.vehicleId,
+        'estado': 'recomendado',
+        'agendamento': 'filaDeEspera',
+        'descricao': 'Recomendação de serviço para o veículo'
+    })
         .then(response => {
-            console.log('Service state updated:', response);
+            console.log('Service recommendation added:', response);
         })
         .catch(error => {
-            console.error('Error updating service state:', error);
+            console.error('Error adding service recommendation:', error);
         });
+  });
 
-    if (selected_state == 'realizado' || selected_state == 'cancelado') {
-      window.location.href = '/servicos';
-    } 
-    
-    else {
-      // refresh
-      window.location.reload();
-    }
+  servico.value.estado = 'realizado';
+
+  axios.put(`http://localhost:3000/services/${id}`, servico.value)
+      .then(response => {
+          console.log('Service finished:', response);
+          window.location.href = '/servicos';
+      })
+      .catch(error => {
+          console.error('Error finishing service:', error);
+      });
+};
+
+const cancel_service_finish = () => {
+  confirm_finish.value = false;
+  window.location.reload();
 };
 
 const confirm_service_info_edit = () => {
@@ -157,6 +198,24 @@ const confirm_service_info_edit = () => {
     window.location.reload();
 };
 
+const confirm_service_cancel = () => {
+  servico.value.estado = 'cancelado';
+
+  axios.put(`http://localhost:3000/services/${id}`, servico.value)
+      .then(response => {
+          console.log('Service canceled:', response);
+          window.location.href = '/servicos';
+      })
+      .catch(error => {
+          console.error('Error canceling service:', error);
+      });
+};
+
+const cancel_service_cancel = () => {
+  cancel_service.value = false;
+  window.location.reload();
+};
+
 const format_service_definition = (def_id) => {
     const def = service_definitions.value.find(def => def.id === def_id);
     if (def) return def.descr;
@@ -167,7 +226,7 @@ const format_service_definition = (def_id) => {
 <template>
     <h2 class="servico-title">Serviço {{ servico.id }}</h2>
 
-    <div class="servico-container" v-if="!confirm_finish">
+    <div class="servico-container" v-if="!confirm_finish && !cancel_service">
       <div class="vehicle-info-container">
         <div class="vehicle-info-title">
           <img src="/imgs/sports-car.png" class="vehicle-icon">
@@ -232,6 +291,7 @@ const format_service_definition = (def_id) => {
     </div>
 
     <div class="confirm-service-end-container" v-if="confirm_finish">
+      <img src="/imgs/close.png" class="cancel-service-finish close-icon" @click="cancel_service_finish()">
       <div class="confirm-service-title-container">  
         <h2 class="confirm-service-title">Serviço terminado</h2>
         <h3>Recomendar algum serviço ao cliente ?</h3>
@@ -243,7 +303,22 @@ const format_service_definition = (def_id) => {
         </div>
       </div>
 
-      <div class="service-info-edit-confirm-container" style="margin-top: 5px;">
+      <div class="service-info-edit-confirm-container" style="margin-top: 5px;" @click="confirm_service_finish()">
+        <div class="service-info-edit-confirm-button">
+          <h3>Confirmar</h3>
+          <img class="edit-check-icon" src="/imgs/check.png">
+        </div>
+      </div>
+    </div>
+
+    <div class="confirm-cancel-service-container" v-if="cancel_service">
+      <img src="/imgs/close.png" class="cancel-service-finish close-icon" @click="cancel_service_cancel()">
+      <div class="confirm-service-title-container">  
+        <h2 class="confirm-service-title">Cancelar serviço</h2>
+        <h3>Pretende marcar o serviço como cancelado no sistema ?</h3>
+      </div>
+
+      <div class="service-info-edit-confirm-container" style="margin-top: 5px;" @click="confirm_service_cancel()">
         <div class="service-info-edit-confirm-button">
           <h3>Confirmar</h3>
           <img class="edit-check-icon" src="/imgs/check.png">
@@ -376,6 +451,7 @@ const format_service_definition = (def_id) => {
     color: white;
     cursor: pointer;
     transition: all .1s ease-in-out;
+    margin-top: 2%;
   }
 
   .service-info-edit-confirm-button:hover {
@@ -394,6 +470,16 @@ const format_service_definition = (def_id) => {
     border-radius: 20px;
   }
 
+  .cancel-service-finish {
+    cursor: pointer;
+    transition: all .1s ease-in-out;
+    margin-left: 95%;
+  }
+
+  .cancel-service-finish:hover {
+    transform: scale(1.05);
+  }
+
   .confirm-service-title {
     margin: 0 auto;
   }
@@ -401,7 +487,7 @@ const format_service_definition = (def_id) => {
   .service-recomendations-container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
     flex-wrap: wrap;
     gap: 5%;
@@ -413,6 +499,19 @@ const format_service_definition = (def_id) => {
     flex-direction: row;
     align-items: center;
     gap: 5%;
-    width: 45%;
+    width: 30%;
+  }
+
+  .confirm-cancel-service-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 90%;
+    margin: 0 auto;
+    background-color: #D9D9D9; 
+    padding: 10px 15px;
+    border-radius: 20px;
   }
 </style>

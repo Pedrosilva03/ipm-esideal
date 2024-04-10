@@ -245,7 +245,7 @@
       "id": "s31",
       "vehicleId": "08-25-AA",
       "service-definitionId": "sp",
-      "estado": "programado",
+      "estado": "realizado",
       "agendamento": "filaDeEspera",
       "descrição": "meter pneu bom",
       "duração": 50,
@@ -291,23 +291,37 @@
       "id": "s34",
       "vehicleId": "AH-21-25",
       "service-definitionId": "sfc",
-      "estado": "parado",
-      "agendamento": "filaDeEspera",
-      "descrição": "Falta o filtro."
+      "estado": "programado",
+      "agendamento": "programado",
+      "descrição": "Falta o filtro.",
+      "data": {
+        "dia": 30,
+        "mes": 4,
+        "ano": 2024,
+        "hora": 18,
+        "minutos": 25
+      }
     },
     {
       "id": "s12",
       "vehicleId": "08-25-AA",
       "service-definitionId": "sp",
-      "estado": "realizado",
-      "agendamento": "filaDeEspera",
-      "descrição": "Colocar XPTO 225R15"
+      "estado": "programado",
+      "agendamento": "programado",
+      "descrição": "Colocar XPTO 225R15",
+      "data": {
+        "dia": 10,
+        "mes": 4,
+        "ano": 2024,
+        "hora": 15,
+        "minutos": 41
+      }
     },
     {
       "id": "s24",
       "vehicleId": "08-25-AA",
       "service-definitionId": "li",
-      "estado": "realizado",
+      "estado": "programado",
       "agendamento": "programado",
       "data": {
         "dia": 2,

@@ -1,8 +1,8 @@
 <script setup>
   import { computed } from 'vue';
   import { useRoute } from 'vue-router';
-  import Navbar from './components/navbar.vue'
-  import Footer from './components/footer.vue'
+  import Navbar from './components/navbar.vue';
+
   const route = useRoute();
 
   const shouldShowNavbar = computed(() => {
@@ -13,7 +13,6 @@
 <template>
   <Navbar v-if="shouldShowNavbar" @logout="handleLogout" :loggedInUser="loggedInUser" />
   <RouterView @login="handleLogin" />
-  <Footer v-if="shouldShowNavbar" />
 </template>
 
 <script>

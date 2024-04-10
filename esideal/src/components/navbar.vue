@@ -5,12 +5,16 @@
     </div>
 
     <div class="nav-items">
+      <router-link to="/servicos_realizados">
+          <img src="/imgs/history.png" class="nav-link" title="Serviços realizados" />
+      </router-link>
+
       <router-link to="/servicos">
-          <img src="/imgs/task.png" class="nav-link" />
+          <img src="/imgs/task.png" class="nav-link" title="Lista de serviços" />
       </router-link>
 
       <router-link to="/login" @click="logout">
-          <img src="/imgs/logout.png" class="nav-link" />
+          <img src="/imgs/logout.png" class="nav-link" title="Logout" />
       </router-link>
     </div>
   </nav>
@@ -47,7 +51,7 @@
 
   .nav-items {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
   .nav-link {
