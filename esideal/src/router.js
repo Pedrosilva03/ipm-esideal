@@ -3,6 +3,7 @@ import Login from './pages/Login.vue'
 import Servicos from './pages/Servicos.vue'
 import Pag_Servico from './pages/Pag_Servico.vue'
 import Servicos_Realizados from './pages/Servicos_realizados.vue'
+import Perfil from './pages/Profile.vue'
 
 const links = [
     {
@@ -33,6 +34,12 @@ const links = [
         path: "/servicos_realizados",
         name: "Serviços Realizados",
         component: Servicos_Realizados
+    },
+
+    {
+        path: "/perfil",
+        name: "Perfil",
+        component: Perfil
     }
 ]
 

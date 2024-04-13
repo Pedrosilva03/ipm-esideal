@@ -25,6 +25,3 @@ dist-ssr
 
 # vscode
 .vscode
-
-# json db
-db.json

@@ -291,7 +291,7 @@
       "id": "s34",
       "vehicleId": "AH-21-25",
       "service-definitionId": "sfc",
-      "estado": "programado",
+      "estado": "cancelado",
       "agendamento": "programado",
       "descrição": "Falta o filtro.",
       "data": {
@@ -306,7 +306,7 @@
       "id": "s12",
       "vehicleId": "08-25-AA",
       "service-definitionId": "sp",
-      "estado": "programado",
+      "estado": "realizado",
       "agendamento": "programado",
       "descrição": "Colocar XPTO 225R15",
       "data": {
@@ -331,23 +331,42 @@
         "minutos": 15
       },
       "descrição": "shampoo XPTO"
+    },
+    {
+      "id": "s650805",
+      "service-definitionId": "sfam",
+      "vehicleId": "08-25-AA",
+      "estado": "recomendado",
+      "agendamento": "filaDeEspera",
+      "descricao": "Recomendação de serviço para o veículo"
+    },
+    {
+      "id": "s204618",
+      "service-definitionId": "sva",
+      "vehicleId": "08-25-AA",
+      "estado": "recomendado",
+      "agendamento": "filaDeEspera",
+      "descricao": "Recomendação de serviço para o veículo"
     }
   ],
   "mechanics": [
     {
       "id": "m1",
       "nome": "Manuel",
-      "pass": "m1"
+      "pass": "m1",
+      "funcao": "mecânico"
     },
     {
       "id": "m2",
       "nome": "António",
-      "pass": "m2"
+      "pass": "m2",
+      "funcao": "mecânico"
     },
     {
       "id": "m3",
       "nome": "João",
-      "pass": "m3"
+      "pass": "m3",
+      "funcao": "mecânico"
     }
   ]
 }

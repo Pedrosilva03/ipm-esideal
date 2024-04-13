@@ -59,6 +59,7 @@ const formatServiceState = (state) => {
     if (state === 'programado') return 'Programado';
     if (state === 'parado') return 'Parado';
     if (state === 'realizado') return 'Realizado';
+    if (state === 'cancelado') return 'Cancelado';
 };
 
 watchEffect(() => {

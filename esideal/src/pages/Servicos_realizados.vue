@@ -1,7 +1,7 @@
 <template>
-    <h2 class="servicos-title">Serviços realizados</h2>
+    <h2 class="servicos-title">Histórico de serviços</h2>
     
-    <ServiceTable :possibleStates="['realizado']" />
+    <ServiceTable :possibleStates="['realizado', 'cancelado']" />
 </template>
 
 <script>

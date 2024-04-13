@@ -1,3 +1,43 @@
+<script setup>
+import { ref } from 'vue';
+import Axios from 'axios';
+import { useRouter } from 'vue-router';
+import { useLoginStore } from '../stores/loginStore';
+
+const router = useRouter();
+
+const loginStore = useLoginStore();
+
+const username = ref('');
+const password = ref('');
+
+var loginError = ref(false);
+
+const login = () => {
+    Axios.get('http://localhost:3000/mechanics')
+        .then(response => {
+            const users = response.data;
+
+            const user = users.find(user => user.id === username.value && user.pass === password.value);
+
+            if (user) {
+                loginStore.login(user.id, user.nome, user.pass, user.funcao);
+                router.push({ name: 'Serviços' });
+            } 
+            
+            else {
+                console.error('Invalid user data received:', user);
+                loginError.value = true;
+            }
+        })
+        .catch(error => {
+            console.error('Error logging in:', error);
+            loginError.value = true;
+        });
+};
+
+</script>
+
 <template>
     <div class="login-container">
         <div class="logo-container">
@@ -27,39 +67,8 @@
 </template>
 
 <script>
-import Axios from 'axios';
-
 export default {
-    name: 'Login',
-
-    data() {
-        return {
-            username: '',
-            password: '',
-            loginError: false
-        }
-    }, 
-
-    methods: {
-        async login() {
-            try {
-                const response = await Axios.get('http://localhost:3000/mechanics');
-                const users = response.data;
-
-                for (const mec of users) {
-                    if (mec.id === this.username && mec.pass === this.password) {
-                        this.$emit('login', { username: this.username, password: this.password });
-                        this.$router.push('/servicos');
-                        return;
-                    }
-                }
-
-                this.loginError = true;
-            } catch (error) {
-                console.error('Error during login:', error);
-            }
-        }
-    }
+    name: 'Login'
 }
 </script>
 

@@ -89,6 +89,7 @@ const format_service_state = (state) => {
     if (state === 'parado') return 'Parado';
     if (state === 'realizado') return 'Realizado';
     if (state === 'cancelado') return 'Cancelado';
+    if (state === 'recomendado') return 'Recomendado';
 };
 
 const service_state_options = (current_state) => {
@@ -132,9 +133,10 @@ const update_state = (selected_state) => {
 
 const confirm_service_finish = () => {
   const recomendations = document.querySelectorAll('.service-recomendation input:checked');
+
   recomendations.forEach(recomendation => {
-    const recomendation_id = Number(recomendation.value);
-    print('Recomendation:', recomendation_id);
+    const recomendation_id = recomendation.value;
+
     axios.post('http://localhost:3000/services', {
         'id': 's' + Math.floor(Math.random() * 1000000),
         'service-definitionId': recomendation_id,
@@ -235,7 +237,8 @@ const format_service_definition = (def_id) => {
 
         <p class="vehile-info"><b>Matricula:</b> {{ veiculo.id }}</p>
         <p class="vehicle-info"><b>Tipo:</b> {{ veiculo['vehicle-typeId'] }}</p>
-        <p class="vehicle-info"><b>Cilindrada:</b> {{ veiculo.cilindrada }}</p>
+        <p class="vehicle-info" v-if="veiculo.cilindrada"><b>Cilindrada:</b> {{ veiculo.cilindrada }} cc</p>
+        <p class="vehicle-info" v-if="veiculo.potencia"><b>Potência:</b> {{ veiculo.potencia }} W</p>
         <p class="vehicle-info"><b>Quilometros:</b> {{ veiculo.kms }} kms</p>
         <p class="vehicle-info"><b>Cliente:</b> {{ cliente.nome }}</p>
         <p class="vehicle-info"><b>Contacto:</b> {{ cliente.telefone }}</p>

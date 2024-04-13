@@ -1,39 +1,25 @@
 <script setup>
   import { computed } from 'vue';
   import { useRoute } from 'vue-router';
+  import { useLoginStore } from './stores/loginStore';
   import Navbar from './components/navbar.vue';
 
   const route = useRoute();
 
+  const loginStore = useLoginStore();
+
   const shouldShowNavbar = computed(() => {
-    return route.path !== '/login';
+    return loginStore.isLogged();
   });
 </script>
 
 <template>
-  <Navbar v-if="shouldShowNavbar" @logout="handleLogout" :loggedInUser="loggedInUser" />
-  <RouterView @login="handleLogin" />
+  <Navbar v-if="shouldShowNavbar" />
+  <RouterView />
 </template>
 
 <script>
   export default {
-    name: 'App',
-
-    setup() {
-      const loggedInUser = ref(null);
-
-      const handleLogin = (loginData) => {
-        loggedInUser.value = loginData;
-      };
-
-      const handleLogout = () => {
-        loggedInUser.value = null;
-      };
-
-      return {
-        handleLogin,
-        handleLogout
-      };
-    }
+    name: 'App'
   }
 </script>
