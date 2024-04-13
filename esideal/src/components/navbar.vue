@@ -5,8 +5,12 @@
     </div>
 
     <div class="nav-items">
+      <router-link to="/perfil">
+          <img src="/imgs/profile-user.png" class="nav-link" title="Perfil" />
+      </router-link>
+
       <router-link to="/servicos_realizados">
-          <img src="/imgs/history.png" class="nav-link" title="Serviços realizados" />
+          <img src="/imgs/history.png" class="nav-link" title="Histórico de serviços" />
       </router-link>
 
       <router-link to="/servicos">
@@ -21,16 +25,15 @@
 </template>
 
 <script>
+  import { useLoginStore } from '../stores/loginStore';
+
   export default {
     name: 'Navbar',
 
-    props: {
-      loggedInUser: Object
-    },
-
     methods: {
       logout() {
-        this.$emit('logout');
+        const loginStore = useLoginStore();
+        loginStore.logout();
       }
     }
   }
