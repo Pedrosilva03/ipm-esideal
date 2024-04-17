@@ -1,15 +1,12 @@
 <script setup>
   import { computed } from 'vue';
   import { useRoute } from 'vue-router';
-  import { useLoginStore } from './stores/loginStore';
   import Navbar from './components/navbar.vue';
 
   const route = useRoute();
 
-  const loginStore = useLoginStore();
-
   const shouldShowNavbar = computed(() => {
-    return loginStore.isLogged();
+    return route.name !== 'Login';
   });
 </script>
 
