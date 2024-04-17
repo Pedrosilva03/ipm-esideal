@@ -1,5 +1,5 @@
 <template>
-    <h2 class="servicos-title">Serviços Atribuidos</h2>
+    <h2 class="servicos-title">Lista de serviços</h2>
 
     <ServiceTable :possibleStates="['recomendado', 'porRealizar', 'nafila', 'programado', 'parado']" />
 </template>

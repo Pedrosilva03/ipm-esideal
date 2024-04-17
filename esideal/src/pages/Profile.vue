@@ -1,12 +1,11 @@
 <script setup>
-import { ref } from 'vue';
 import { useLoginStore } from '../stores/loginStore';
 
 const loginStore = useLoginStore();
 
-const id = ref(loginStore.user_id);
-const nome = ref(loginStore.user_name);
-const funcao = ref(loginStore.user_job);
+const id = loginStore.user_id;
+const nome = loginStore.user_name;
+const funcao = loginStore.user_job;
 </script>
 
 <template>

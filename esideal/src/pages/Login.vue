@@ -23,11 +23,6 @@ const login = () => {
             if (user) {
                 loginStore.login(user.id, user.nome, user.pass, user.funcao);
                 router.push({ name: 'Serviços' });
-            } 
-            
-            else {
-                console.error('Invalid user data received:', user);
-                loginError.value = true;
             }
         })
         .catch(error => {
