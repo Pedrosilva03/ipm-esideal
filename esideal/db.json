@@ -245,7 +245,7 @@
       "id": "s31",
       "vehicleId": "08-25-AA",
       "service-definitionId": "sp",
-      "estado": "realizado",
+      "estado": "programado",
       "agendamento": "filaDeEspera",
       "descrição": "meter pneu bom",
       "duração": 50,
@@ -342,7 +342,7 @@
       "id": "s25",
       "vehicleId": "08-25-AA",
       "service-definitionId": "le",
-      "estado": "programado",
+      "estado": "atrasado",
       "agendamento": "filaDeEspera",
       "descrição": "Ver jantes.",
       "data": {
@@ -358,8 +358,8 @@
       "id": "s26",
       "vehicleId": "08-25-AA",
       "service-definitionId": "sfc",
-      "estado": "programado",
-      "agendamento": "programado",
+      "estado": "porRealizar",
+      "agendamento": "filaDeEspera",
       "descrição": "Falta o filtro.",
       "data": {
         "dia": 30,
@@ -374,7 +374,7 @@
       "id": "s27",
       "vehicleId": "08-25-AA",
       "service-definitionId": "sfp",
-      "estado": "porRealizar",
+      "estado": "atrasado",
       "agendamento": "filaDeEspera",
       "descrição": "Filtro de partículas",
       "data": {
@@ -390,10 +390,18 @@
       "id": "s506267",
       "service-definitionId": "cr",
       "vehicleId": "08-25-AA",
-      "estado": "recomendado",
-      "agendamento": "filaDeEspera",
+      "estado": "cancelado",
+      "agendamento": "programado",
       "descricao": "Recomendação de serviço para o veículo",
-      "mecanico": "m1"
+      "mecanico": "m1",
+      "data": {
+        "dia": 7,
+        "mes": 5,
+        "ano": 2024,
+        "hora": 19,
+        "minutos": 0
+      },
+      "descrição": "Inspecionar estado dos travões"
     },
     {
       "id": "s931060",

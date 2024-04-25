@@ -20,7 +20,7 @@ const cliente = ref(null);
 const vehicle_type = ref(null);
 const service_definitions = ref([]);
 
-const service_states = ref(['recomendado', 'porRealizar', 'nafila', 'programado', 'parado', 'realizado', 'cancelado']);
+const service_states = ref(['recomendado', 'porRealizar', 'nafila', 'programado', 'parado', 'realizado', 'cancelado', 'iniciado', 'atrasado']);
 
 // variaveis para guardar os valores dos campos editaveis
 const data_edit = ref(null);
@@ -79,7 +79,10 @@ const format_date = (date) => {
   if (date) {
       const { dia, mes, ano, hora, minutos } = date;
       if (dia !== undefined && mes !== undefined && ano !== undefined && hora !== undefined && minutos !== undefined) {
-          return `${dia}/${mes}/${ano} ${hora}:${minutos}`;
+        const formattedHora = hora.toString().padStart(2, '0');
+        const formattedMinutos = minutos.toString().padStart(2, '0');
+        return `${dia}/${mes}/${ano} ${formattedHora}:${formattedMinutos}`;
+        
       }
   }
   return 'Sem data de entrega';
@@ -93,10 +96,13 @@ const format_service_state = (state) => {
     if (state === 'realizado') return 'Realizado';
     if (state === 'cancelado') return 'Cancelado';
     if (state === 'recomendado') return 'Recomendado';
+    if (state === 'iniciado') return 'Iniciado';
+    if (state === 'atrasado') return 'Atrasado';
+    else return '-';
 };
 
 const service_state_options = (current_state) => {
-    return service_states.value.filter(state => state !== current_state && state !== 'programado');
+    return service_states.value.filter(state => state !== current_state && state !== 'programado' && state !== 'atrasado');
 };
 
 const toggle_editing = () => {

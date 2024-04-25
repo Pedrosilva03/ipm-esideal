@@ -18,14 +18,24 @@ const logged_mechanic = ref(loginStore.user_id);
 
 axios.get(`http://localhost:3000/services?mecanico=${logged_mechanic.value}`)
     .then(response => {
-        console.log("Response Data:", response.data);
         servicos.value = response.data.sort((a, b) => {
             if (a.data === undefined || b.data === undefined) return 0;
+            const currentDate = new Date();
             const dateA = new Date(a.data.ano, a.data.mes - 1, a.data.dia, a.data.hora, a.data.minutos);
             const dateB = new Date(b.data.ano, b.data.mes - 1, b.data.dia, b.data.hora, b.data.minutos);
+            
+            // ver se o serviço está atrasado
+            if (dateA < currentDate) {
+                a.estado = 'atrasado';
+                axios.patch(`http://localhost:3000/services/${a.id}`, { estado: 'atrasado' })
+            }
+            if (dateB < currentDate) {
+                b.estado = 'atrasado';
+                axios.patch(`http://localhost:3000/services/${b.id}`, { estado: 'atrasado' })
+            }
+
             return dateA - dateB;
         });
-        console.log("Servicos:", servicos.value);
     })
     .catch(error => {
         console.error('Error fetching services data:', error);
@@ -43,7 +53,9 @@ const formatDate = (date) => {
     if (date) {
         const { dia, mes, ano, hora, minutos } = date;
         if (dia !== undefined && mes !== undefined && ano !== undefined && hora !== undefined && minutos !== undefined) {
-            return `${dia}/${mes}/${ano} ${hora}:${minutos}`;
+            const formattedHora = hora.toString().padStart(2, '0');
+            const formattedMinutos = minutos.toString().padStart(2, '0');
+            return `${dia}/${mes}/${ano} ${formattedHora}:${formattedMinutos}`;
         }
     }
     return '-';
@@ -67,6 +79,9 @@ const formatServiceState = (state) => {
     if (state === 'parado') return 'Parado';
     if (state === 'realizado') return 'Realizado';
     if (state === 'cancelado') return 'Cancelado';
+    if (state === 'iniciado') return 'Iniciado';
+    if (state === 'atrasado') return 'Atrasado';
+    else return '-';
 };
 
 watchEffect(() => {

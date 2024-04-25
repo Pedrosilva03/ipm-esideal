@@ -1,7 +1,7 @@
 <template>
     <h2 class="servicos-title">Lista de serviços</h2>
 
-    <ServiceTable :possibleStates="['recomendado', 'porRealizar', 'nafila', 'programado', 'parado']" />
+    <ServiceTable :possibleStates="['recomendado', 'porRealizar', 'nafila', 'programado', 'parado', 'iniciado', 'atrasado']" />
 </template>
 
 <script>
