@@ -255,7 +255,8 @@
         "ano": 2024,
         "hora": 15,
         "minutos": 15
-      }
+      },
+      "mecanico": "m1"
     },
     {
       "id": "s32",
@@ -270,7 +271,8 @@
         "hora": 14,
         "minutos": 15
       },
-      "descrição": "Atenção ao banco do condutor."
+      "descrição": "Atenção ao banco do condutor.",
+      "mecanico": "m2"
     },
     {
       "id": "s33",
@@ -285,7 +287,8 @@
         "ano": "2024",
         "hora": "16",
         "minutos": "09"
-      }
+      },
+      "mecanico": "m3"
     },
     {
       "id": "s34",
@@ -300,14 +303,15 @@
         "ano": 2024,
         "hora": 18,
         "minutos": 25
-      }
+      },
+      "mecanico": "m1"
     },
     {
       "id": "s12",
       "vehicleId": "08-25-AA",
       "service-definitionId": "sp",
-      "estado": "realizado",
-      "agendamento": "programado",
+      "estado": "porRealizar",
+      "agendamento": "filaDeEspera",
       "descrição": "Colocar XPTO 225R15",
       "data": {
         "dia": 10,
@@ -315,7 +319,8 @@
         "ano": 2024,
         "hora": 15,
         "minutos": 41
-      }
+      },
+      "mecanico": "m2"
     },
     {
       "id": "s24",
@@ -330,23 +335,92 @@
         "hora": 14,
         "minutos": 15
       },
-      "descrição": "shampoo XPTO"
+      "descrição": "shampoo XPTO",
+      "mecanico": "m3"
     },
     {
-      "id": "s650805",
-      "service-definitionId": "sfam",
+      "id": "s25",
+      "vehicleId": "08-25-AA",
+      "service-definitionId": "le",
+      "estado": "programado",
+      "agendamento": "filaDeEspera",
+      "descrição": "Ver jantes.",
+      "data": {
+        "dia": 10,
+        "mes": 4,
+        "ano": 2024,
+        "hora": 16,
+        "minutos": 9
+      },
+      "mecanico": "m1"
+    },
+    {
+      "id": "s26",
+      "vehicleId": "08-25-AA",
+      "service-definitionId": "sfc",
+      "estado": "programado",
+      "agendamento": "programado",
+      "descrição": "Falta o filtro.",
+      "data": {
+        "dia": 30,
+        "mes": 4,
+        "ano": 2024,
+        "hora": 18,
+        "minutos": 25
+      },
+      "mecanico": "m1"
+    },
+    {
+      "id": "s27",
+      "vehicleId": "08-25-AA",
+      "service-definitionId": "sfp",
+      "estado": "porRealizar",
+      "agendamento": "filaDeEspera",
+      "descrição": "Filtro de partículas",
+      "data": {
+        "dia": 10,
+        "mes": 4,
+        "ano": 2024,
+        "hora": 16,
+        "minutos": 9
+      },
+      "mecanico": "m1"
+    },
+    {
+      "id": "s506267",
+      "service-definitionId": "cr",
       "vehicleId": "08-25-AA",
       "estado": "recomendado",
       "agendamento": "filaDeEspera",
-      "descricao": "Recomendação de serviço para o veículo"
+      "descricao": "Recomendação de serviço para o veículo",
+      "mecanico": "m1"
     },
     {
-      "id": "s204618",
-      "service-definitionId": "sva",
+      "id": "s931060",
+      "service-definitionId": "mot",
       "vehicleId": "08-25-AA",
       "estado": "recomendado",
       "agendamento": "filaDeEspera",
-      "descricao": "Recomendação de serviço para o veículo"
+      "descricao": "Recomendação de serviço para o veículo",
+      "mecanico": "m1"
+    },
+    {
+      "id": "s506267",
+      "service-definitionId": "cr",
+      "vehicleId": "08-25-AA",
+      "estado": "recomendado",
+      "agendamento": "filaDeEspera",
+      "descricao": "Recomendação de serviço para o veículo",
+      "mecanico": "m1"
+    },
+    {
+      "id": "s931060",
+      "service-definitionId": "mot",
+      "vehicleId": "08-25-AA",
+      "estado": "recomendado",
+      "agendamento": "filaDeEspera",
+      "descricao": "Recomendação de serviço para o veículo",
+      "mecanico": "m1"
     }
   ],
   "mechanics": [

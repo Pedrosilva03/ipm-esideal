@@ -2,6 +2,9 @@
 import { ref, defineProps, watchEffect } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import { useLoginStore } from '../stores/loginStore';
+
+const loginStore = useLoginStore();
 
 const props = defineProps(['possibleStates']);
 
@@ -11,14 +14,18 @@ const router = useRouter();
 
 const filteredServicos = ref([]);
 
-axios.get('http://localhost:3000/services')
+const logged_mechanic = ref(loginStore.user_id);
+
+axios.get(`http://localhost:3000/services?mecanico=${logged_mechanic.value}`)
     .then(response => {
+        console.log("Response Data:", response.data);
         servicos.value = response.data.sort((a, b) => {
             if (a.data === undefined || b.data === undefined) return 0;
             const dateA = new Date(a.data.ano, a.data.mes - 1, a.data.dia, a.data.hora, a.data.minutos);
             const dateB = new Date(b.data.ano, b.data.mes - 1, b.data.dia, b.data.hora, b.data.minutos);
             return dateA - dateB;
         });
+        console.log("Servicos:", servicos.value);
     })
     .catch(error => {
         console.error('Error fetching services data:', error);

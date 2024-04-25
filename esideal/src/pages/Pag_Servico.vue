@@ -2,6 +2,9 @@
 import axios from 'axios';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router'
+import { useLoginStore } from '../stores/loginStore';
+
+const loginStore = useLoginStore();
 
 const route = useRoute()
 const id = route.params.id;
@@ -143,7 +146,8 @@ const confirm_service_finish = () => {
         'vehicleId': servico.value.vehicleId,
         'estado': 'recomendado',
         'agendamento': 'filaDeEspera',
-        'descricao': 'Recomendação de serviço para o veículo'
+        'descricao': 'Recomendação de serviço para o veículo',
+        'mecanico': loginStore.user_id
     })
         .then(response => {
             console.log('Service recommendation added:', response);
