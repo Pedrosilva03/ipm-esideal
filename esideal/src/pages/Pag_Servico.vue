@@ -102,7 +102,7 @@ const format_service_state = (state) => {
 };
 
 const service_state_options = (current_state) => {
-    return service_states.value.filter(state => state !== current_state && state !== 'programado' && state !== 'atrasado');
+    return service_states.value.filter(state => state !== current_state && state !== 'programado' && state !== 'atrasado' && state !== 'recomendado');
 };
 
 const toggle_editing = () => {

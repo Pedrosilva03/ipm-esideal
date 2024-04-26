@@ -25,11 +25,11 @@ axios.get(`http://localhost:3000/services?mecanico=${logged_mechanic.value}`)
             const dateB = new Date(b.data.ano, b.data.mes - 1, b.data.dia, b.data.hora, b.data.minutos);
             
             // ver se o serviço está atrasado
-            if (dateA < currentDate) {
+            if (dateA < currentDate && a.estado !== 'realizado' && a.estado !== 'cancelado' && a.estado !== 'atrasado') {
                 a.estado = 'atrasado';
                 axios.patch(`http://localhost:3000/services/${a.id}`, { estado: 'atrasado' })
             }
-            if (dateB < currentDate) {
+            if (dateB < currentDate && b.estado !== 'realizado' && b.estado !== 'cancelado' && b.estado !== 'atrasado') {
                 b.estado = 'atrasado';
                 axios.patch(`http://localhost:3000/services/${b.id}`, { estado: 'atrasado' })
             }

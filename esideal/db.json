@@ -407,10 +407,17 @@
       "id": "s931060",
       "service-definitionId": "mot",
       "vehicleId": "08-25-AA",
-      "estado": "recomendado",
-      "agendamento": "filaDeEspera",
+      "estado": "realizado",
+      "agendamento": "programado",
       "descricao": "Recomendação de serviço para o veículo",
-      "mecanico": "m1"
+      "mecanico": "m1",
+      "data": {
+        "dia": 25,
+        "mes": 4,
+        "ano": 2024,
+        "hora": 10,
+        "minutos": 52
+      }
     },
     {
       "id": "s506267",
@@ -424,6 +431,24 @@
     {
       "id": "s931060",
       "service-definitionId": "mot",
+      "vehicleId": "08-25-AA",
+      "estado": "recomendado",
+      "agendamento": "filaDeEspera",
+      "descricao": "Recomendação de serviço para o veículo",
+      "mecanico": "m1"
+    },
+    {
+      "id": "s152479",
+      "service-definitionId": "sfc",
+      "vehicleId": "08-25-AA",
+      "estado": "recomendado",
+      "agendamento": "filaDeEspera",
+      "descricao": "Recomendação de serviço para o veículo",
+      "mecanico": "m1"
+    },
+    {
+      "id": "s71779",
+      "service-definitionId": "sba",
       "vehicleId": "08-25-AA",
       "estado": "recomendado",
       "agendamento": "filaDeEspera",
